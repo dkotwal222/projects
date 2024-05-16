@@ -11,6 +11,7 @@ class Edge {
         this.target = target;
     }
 }
+// creates a class that represents an edge between 2 different nodes (initialises the origin and target of the edge)
 
 class Node {
     String name;
@@ -18,11 +19,11 @@ class Node {
         this.name = name;
     }
 }
-
+// creates a class that represents the node ( initialises name )
 class Analysis {
     static List<List<Node>> nodeList;
     static Map<String, Integer> nameCount;
-
+// creates list of nodes then uses map so we can count followers for each node later
     public static void graph(List<Edge> edgeList, int numNodes) {
         nodeList = new ArrayList<>();
         for (int i = 0; i < numNodes; i++) {
@@ -32,11 +33,11 @@ class Analysis {
             nodeList.get(nodeList.size() - 1).add(new Node(e.target));
         }
     }
-
+//using the list of edges, creates a graph
     public static double density(int numNodes, int numEdges) {
         return (double) numEdges / (numNodes * (numNodes - 1));
     }
-
+// function to calculate the density using the number of edges and nodes
     public static String mostFollowers(Map<String, Integer> words) {
         int maxFollowers = 0;
         String mostFollowers = "";
@@ -53,7 +54,7 @@ class Analysis {
         }
         return mostFollowers;
     }
-
+// iterates over the map and uses a count to find who has the most followers
     public static String mostFollowing(List<String[]> nameList) {
         int maxFollowing = 0;
         String mostFollowing = "";
@@ -65,12 +66,13 @@ class Analysis {
         }
         return mostFollowing;
     }
-
+// iterates over the namelist and uses a count to find who follows the most people by comparing length of each list
     public static void main(String[] args) throws IOException {
         String filePath = args[0];
         List<String[]> nameList = new ArrayList<>();
         List<Edge> edgeList = new ArrayList<>();
         nameCount = new HashMap<>();
+// uses args to get the file path, then uses a list to store names and edges, and a Map to count followers
         int totalNames = 0;
         int numEdges = 0;
 
@@ -99,7 +101,8 @@ class Analysis {
                 reader.close();
             }
         }
-
+// uses bufferedreader to read file line by line, splitting each line into names and adding them to the nameList
+// has the exception if incorrect file is used
         int numNodes = nameList.size();
         numEdges = totalNames - numNodes;
         graph(edgeList, numNodes);
